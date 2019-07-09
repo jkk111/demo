@@ -2,6 +2,7 @@ FROM node:10.16
 
 RUN mkdir -p "/opt/workdir"
 
+WORKDIR /opt/workdir
 COPY package.json /opt/workdir/package.json 
 COPY yarn.lock /opt/workdir/yarn.lock
 

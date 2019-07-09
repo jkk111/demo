@@ -4,11 +4,10 @@ metadata:
   name: demo
 spec:
   ingress:
-    hosts:
-    - demo.ingress.john-kevin.me
+    hosts: [demo.ingress.john-kevin.me]
     backendPort: 80
     stackLifecycle:
-      scaledownTTLSeconds: 30
+      scaledownTTLSeconds: 300
       limit: 2
     stackTemplate:
       spec:
@@ -18,7 +17,7 @@ spec:
           minReplicas: 1
           maxReplicas: 2
           metrics:
-          - type: Resource
+            - type: Resource
               resource:
                 name: cpu
                 targetAverageUtilization: 50
