@@ -5,7 +5,7 @@ metadata:
 spec:
   ingress:
     hosts:
-    - demo.ingress.john-kevin.me
+      - demo.ingress.john-kevin.me
     backendPort: 80
     stackLifecycle:
       scaledownTTLSeconds: 30
@@ -18,22 +18,22 @@ spec:
           minReplicas: 1
           maxReplicas: 2
           metrics:
-          - type: Resource
+            - type: Resource
               resource:
                 name: cpu
                 targetAverageUtilization: 50
         podTemplate:
           spec:
             containers:
-            - name: demo
-              image: registry.john-kevin.me/demo:1
-              ports: 
-              - containerPort: 8080
-                name: ingress
-              resources:
-                limits:
-                  cpu: 10m
-                  memory: 200Mi
-                requests:
-                  cpu: 10m
-                  memory: 200Mi
+              - name: demo
+                image: registry.john-kevin.me/demo:1
+                ports:
+                  - containerPort: 8080
+                    name: ingress
+                resources:
+                  limits:
+                    cpu: 10m
+                    memory: 200Mi
+                  requests:
+                    cpu: 10m
+                    memory: 200Mi
