@@ -1,0 +1,39 @@
+apiVersion: zalando.org/v1
+kind: StackSet
+metadata:
+  name: demo
+spec:
+  ingress:
+    hosts:
+    - demo.ingress.john-kevin.me
+    backendPort: 80
+    stackLifecycle:
+      scaledownTTLSeconds: 30
+      limit: 2
+    stackTemplate:
+      spec:
+        version: v1
+        replicas: 1
+        horizontalPodAutoscaler:
+          minReplicas: 1
+          maxReplicas: 2
+          metrics:
+          - type: Resource
+              resource:
+                name: cpu
+                targetAverageUtilization: 50
+        podTemplate:
+          spec:
+            containers:
+            - name: demo
+              image: registry.john-kevin.me/demo:1
+              ports: 
+              - containerPort: 8080
+                name: ingress
+              resources:
+                limits:
+                  cpu: 10m
+                  memory: 200Mi
+                requests:
+                  cpu: 10m
+                  memory: 200Mi
