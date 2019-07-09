@@ -1,21 +1,21 @@
 apiVersion: zalando.org/v1
 kind: StackSet
 metadata:
-  name: demo
+  name: my-app
 spec:
   ingress:
-    hosts: [demo.ingress.john-kevin.me]
+    hosts: [my-app.ingress.john-kevin.me]
     backendPort: 80
   stackLifecycle:
     scaledownTTLSeconds: 300
-    limit: 2
+    limit: 5
   stackTemplate:
     spec:
-      version: v1
-      replicas: 1
+      version: v2
+      replicas: 3
       horizontalPodAutoscaler:
-        minReplicas: 1
-        maxReplicas: 2
+        minReplicas: 3
+        maxReplicas: 10
         metrics:
           - type: Resource
             resource:
@@ -24,16 +24,15 @@ spec:
       podTemplate:
         spec:
           containers:
-            - name: demo
+            - name: test
               image: registry.john-kevin.me/demo:1
-              imagePullPolicy: Always
               ports:
                 - containerPort: 8080
                   name: ingress
               resources:
                 limits:
                   cpu: 10m
-                  memory: 200Mi
+                  memory: 50Mi
                 requests:
                   cpu: 10m
-                  memory: 200Mi
+                  memory: 50Mi
