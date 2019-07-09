@@ -6,29 +6,30 @@ spec:
   ingress:
     hosts: [demo.ingress.john-kevin.me]
     backendPort: 80
-    stackLifecycle:
-      scaledownTTLSeconds: 300
-      limit: 2
-    stackTemplate:
-      spec:
-        version: v1
-        replicas: 1
-        horizontalPodAutoscaler:
-          minReplicas: 1
-          maxReplicas: 2
-          metrics:
-            - type: Resource
-              resource:
-                name: cpu
-                targetAverageUtilization: 50
-        podTemplate:
-          spec:
-            containers:
+  stackLifecycle:
+    scaledownTTLSeconds: 300
+    limit: 2
+  stackTemplate:
+    spec:
+      version: v1
+      replicas: 1
+      horizontalPodAutoscaler:
+        minReplicas: 1
+        maxReplicas: 2
+        metrics:
+          - type: Resource
+            resource:
+              name: cpu
+              targetAverageUtilization: 50
+      podTemplate:
+        spec:
+          containers:
             - name: demo
               image: registry.john-kevin.me/demo:1
-              ports: 
-              - containerPort: 8080
-                name: ingress
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+                  name: ingress
               resources:
                 limits:
                   cpu: 10m
